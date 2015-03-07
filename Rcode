@@ -1,0 +1,105 @@
+> Parte a)
+
+> library(mclust)
+
+> animal<-data.frame(tibia=c(41.2,42.5,41.9,42.8,42.0,38.5,37.9,38.5,39,39.8),femur=c(44.1,43.6,42.6,43.5,42.3,38.9,36.5,39.4,37.2,38.9),humero=c(35.3,35.4,34.9,34.5,33.4,32.5,32.2,33.1,33.5,32.6),radio=c(30.1,31.2,32.3,30.4,29.9,25.9,25.3,24.9,25.1,24.8))
+
+> animal
+   tibia femur humero radio
+1   41.2  44.1   35.3  30.1
+2   42.5  43.6   35.4  31.2
+3   41.9  42.6   34.9  32.3
+4   42.8  43.5   34.5  30.4
+5   42.0  42.3   33.4  29.9
+6   38.5  38.9   32.5  25.9
+7   37.9  36.5   32.2  25.3
+8   38.5  39.4   33.1  24.9
+9   39.0  37.2   33.5  25.1
+10  39.8  38.9   32.6  24.8
+
+> Mclust(animal[,1:4],G=2)
+'Mclust' model object:
+ best model: spherical, equal volume (EII) with 2 components
+
+> Mclust(animal[,1:4],G=2)$parameters
+$Vinv
+NULL
+
+$pro
+[1] 0.5 0.5
+
+$mean
+        [,1]  [,2]
+tibia  42.08 38.74
+femur  43.22 38.18
+humero 34.70 32.78
+radio  30.78 25.20
+
+$variance
+$variance$modelName
+[1] "EII"
+
+$variance$d
+[1] 4
+
+$variance$G
+[1] 2
+
+$variance$sigma
+, , 1
+
+        tibia  femur humero  radio
+tibia  0.5093 0.0000 0.0000 0.0000
+femur  0.0000 0.5093 0.0000 0.0000
+humero 0.0000 0.0000 0.5093 0.0000
+radio  0.0000 0.0000 0.0000 0.5093
+
+, , 2
+
+        tibia  femur humero  radio
+tibia  0.5093 0.0000 0.0000 0.0000
+femur  0.0000 0.5093 0.0000 0.0000
+humero 0.0000 0.0000 0.5093 0.0000
+radio  0.0000 0.0000 0.0000 0.5093
+
+
+$variance$Sigma
+        tibia  femur humero  radio
+tibia  0.5093 0.0000 0.0000 0.0000
+femur  0.0000 0.5093 0.0000 0.0000
+humero 0.0000 0.0000 0.5093 0.0000
+radio  0.0000 0.0000 0.0000 0.5093
+
+$variance$sigmasq
+[1] 0.5093
+
+$variance$scale
+[1] 0.5093
+
+# Este analisis me ha permitido obtener los parametros para las dos distribuciones
+# normales multivariable. Por ejemplo, las medias para las dos poblaciones respecto
+# a cada una de las variables (tibia, femur, humero y radio) se indican bajo el
+# epigrafe $mean.
+
+# Parte b)
+
+> solu<-Mclust(animal[,1:4],G=2)$z
+
+> solu
+              [,1]         [,2]
+ [1,] 1.000000e+00 3.497015e-30
+ [2,] 1.000000e+00 3.910723e-37
+ [3,] 1.000000e+00 1.525625e-35
+ [4,] 1.000000e+00 2.803442e-32
+ [5,] 1.000000e+00 1.157592e-20
+ [6,] 7.067939e-26 1.000000e+00
+ [7,] 3.018001e-41 1.000000e+00
+ [8,] 1.668351e-27 1.000000e+00
+ [9,] 6.278169e-34 1.000000e+00
+[10,] 3.030517e-27 1.000000e+00
+
+# Finalmente, esta segunda parte me ha permitido determinar los dos grupos de individuos.
+# Los cinco primeros individuos pertenecen a un grupo, he de suponer machos por el
+# mayor tamaño de los huesos, mientras que los cinco ultimos pertenecen a un segundo
+# grupo. Esta clasificacion se hace en base a probabilidades de 0.5 para ambos grupos,
+# suposicion que es correcta como se comprueba en los parametros de la parte a).
